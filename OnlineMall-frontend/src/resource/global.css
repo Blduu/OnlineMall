@@ -1,0 +1,95 @@
+html,body,#app {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
+}
+
+:root {
+    /* 主题色彩系统 */
+    --primary-color: #409EFF;
+    --success-color: #67C23A;
+    --warning-color: #E6A23C;
+    --danger-color: #F56C6C;
+    --info-color: #909399;
+    
+    /* 中性色彩 */
+    --main-black: #303133;
+    --regular-black: #606266;
+    --secondary-black: #909399;
+    --placeholder: #C0C4CC;
+    
+    /* 边框色 */
+    --border-color-base: #DCDFE6;
+    --border-color-light: #E4E7ED;
+    --border-color-lighter: #EBEEF5;
+    --border-color-extra-light: #F2F6FC;
+    
+    /* 背景色 */
+    --background-color-base: #F5F7FA;
+}
+
+.full-height{
+    height: 100%;
+}
+
+/* 全局链接样式 */
+a {
+    text-decoration: none;
+    color: var(--primary-color);
+    transition: color 0.3s;
+}
+
+a:hover {
+    color: #66b1ff;
+}
+
+/* 常用边框圆角 */
+.radius-small {
+    border-radius: 2px;
+}
+
+.radius-base {
+    border-radius: 4px;
+}
+
+.radius-large {
+    border-radius: 8px;
+}
+
+/* 阴影效果 */
+.box-shadow-light {
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+}
+
+.box-shadow-base {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+}
+
+.box-shadow-dark {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .12);
+}
+
+/* 页面过渡动画 */
+.page-transition-enter-active,
+.page-transition-leave-active {
+    transition: opacity .3s;
+}
+
+.page-transition-enter,
+.page-transition-leave-to {
+    opacity: 0;
+}
+
+/* 常用布局容器 */
+.container {
+    width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+@media (max-width: 1200px) {
+    .container {
+        width: 100%;
+    }
+}

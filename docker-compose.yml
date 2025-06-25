@@ -1,0 +1,76 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.4.5
+    container_name: onlinemall-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: DB_OnlineMall
+      MYSQL_USER: onlinemall
+      MYSQL_PASSWORD: onlinemall
+      MYSQL_INITDB_SKIP_TZINFO: 1
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./OnlineMall-backend/sql/DB_OnlineMall.sql:/docker-entrypoint-initdb.d/DB_OnlineMall.sql
+    ports:
+      - "3306:3306"
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    networks:
+      - onlinemall-network
+
+  redis:
+    image: redis:8.0.1
+    container_name: onlinemall-redis
+    restart: always
+    environment:
+      - REDIS_PASSWORD= root
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    networks:
+      - onlinemall-network
+    
+  backend:
+    image: onlinemall-backend:${VERSION:-latest}
+    container_name: onlinemall-backend
+    restart: always
+    depends_on:
+      - mysql
+      - redis
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/DB_OnlineMall?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+      - SPRING_DATASOURCE_USERNAME=onlinemall
+      - SPRING_DATASOURCE_PASSWORD=onlinemall
+      - SPRING_REDIS_HOST=redis
+      - SPRING_REDIS_PORT=6379
+      - SPRING_REDIS_PASSWORD=root
+      - SERVER_PORT=8080
+    volumes:
+      - ./OnlineMall-backend/avatar:/app/avatar
+      - ./OnlineMall-backend/file:/app/file
+    ports:
+      - "8080:8080"
+    networks:
+      - onlinemall-network
+
+  frontend:
+    image: onlinemall-frontend:${VERSION:-latest}
+    container_name: onlinemall-frontend
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - onlinemall-network
+
+networks:
+  onlinemall-network:
+    driver: bridge
+
+volumes:
+  mysql-data:
+  redis-data: 
